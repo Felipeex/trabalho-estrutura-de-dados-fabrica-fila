@@ -53,16 +53,17 @@ void Inserir (TpFilaPrioridade &fila, TpTarefa elemento ) {
     fim = fila.fim;
     if (fila.fim > fila.inicio) {
         i = fila.fim-1;
-        while (i>=fila.inicio && elemento.prioridade < fila.FILA[i].prioridade) {
+        while (!FilaVazia(qtdAux) && elemento.prioridade < fila.FILA[i].prioridade) {
             Aux = fila.FILA[i];
             fila.FILA[i] = elemento;
             fila.FILA[i+1] = Aux;
             i--;
+            qtdAux--;
         }
     } else {
         if(fila.fim > 0)
             i = fila.fim-1;
-        while (qtdAux > 0 && elemento.prioridade < fila.FILA[i].prioridade) {
+        while (!FilaVazia(qtdAux) && elemento.prioridade < fila.FILA[i].prioridade) {
             if (i >= 0) {
                 Aux = fila.FILA[i];
                 fila.FILA[i] = elemento;
