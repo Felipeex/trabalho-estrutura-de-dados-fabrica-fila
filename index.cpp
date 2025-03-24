@@ -6,6 +6,7 @@
 #include "conio.h"
 #include "cores.h"
 #include "TADFilaPrioridade.h"
+#include "TADPainel.h"
 
 void ExibirFila (TpFilaPrioridade fila) {
     TpTarefa aux;
@@ -49,9 +50,18 @@ void Executar (void) {
 
 }
 
+void teste (void) {
+    TpFilaPrioridade fila;
+    TpTarefa aux;
+    
+
+}
+
 
 
 int main (void) {
+    // clrscr();
+    // PainelPrincipal();
     Executar();
     return 0;
 }

@@ -7,6 +7,8 @@ struct TpTarefa {
 };
 
 struct TpFilaPrioridade  {
+    int inicio;
+    int qtde;
     int fim;
     TpTarefa FILA[MAXFILA];
 };
@@ -61,3 +63,50 @@ char FilaCheia (int fim) {
     return fim == MAXFILA-1;
 }
 
+void InserirCircular (TpFilaPrioridade &fila, TpTarefa elemento ) {
+    TpTarefa Aux;
+    int i, fim, qtdAux;
+
+    fila.FILA[++fila.fim] = elemento;
+    qtdAux = ++fila.qtde;
+    fim = fila.fim;
+    if (fila.fim > fila.inicio) {
+        i = fila.fim-1;
+        while (i>=fila.inicio && elemento.prioridade < fila.FILA[i].prioridade) {
+            Aux = fila.FILA[i];
+            fila.FILA[i] = elemento;
+            fila.FILA[i+1] = Aux;
+            i--;
+        }
+    } else {
+        if(fila.fim > 0)
+            i = fila.fim-1;
+        while (qtdAux > 0 && elemento.prioridade < fila.FILA[i].prioridade) {
+            if (i >= 0) {
+                Aux = fila.FILA[i];
+                fila.FILA[i] = elemento;
+                fila.FILA[i+1] = Aux;
+            }
+            else {
+                i = MAXFILA-1;
+                Aux = fila.FILA[i];
+                fila.FILA[i] = elemento;
+                fila.FILA[0] = Aux;
+            }
+            i--;
+            qtdAux--;
+        }
+    }
+}
+
+TpTarefa RetirarCircular (TpFilaPrioridade &fila) {
+    TpTarefa aux;
+
+    aux = fila.FILA[fila.inicio];
+
+    if (fila.inicio == MAXFILA-1)
+        fila.inicio = 0;
+    else
+        fila.inicio++;
+    return aux;
+}
