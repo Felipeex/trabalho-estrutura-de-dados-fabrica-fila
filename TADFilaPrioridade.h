@@ -15,55 +15,36 @@ struct TpFilaPrioridade  {
 
 void Inicializar (TpFilaPrioridade &fila);
 void Inserir (TpFilaPrioridade &fila, TpTarefa elemento);
-void Retirar (TpFilaPrioridade &fila);
+TpTarefa Retirar (TpFilaPrioridade &fila);
 void ElementoInicio (TpFilaPrioridade fila, TpTarefa &elemento);
 void ElementoFim (TpFilaPrioridade fila, TpTarefa &elemento);
-char FilaVazia (int fim);
-char FilaCheia (int fim);
+char FilaVazia (int qtd);
+char FilaCheia (int qtd);
 
 void Inicializar (TpFilaPrioridade &fila) {
     fila.fim = -1;
+    fila.inicio = 0;
+    fila.qtde = 0;
 }
 
-void Inserir (TpFilaPrioridade &fila, TpTarefa elemento) {
-    TpTarefa Aux;
-    int i=fila.fim;
-
-    fila.FILA[++fila.fim] = elemento;
-    while (i>=0 && elemento.prioridade < fila.FILA[i].prioridade) {
-        Aux = fila.FILA[i];
-        fila.FILA[i] = elemento;
-        fila.FILA[i+1] = Aux;
-        i--;
-    }
-}
-
-void Retirar (TpFilaPrioridade &fila, TpTarefa &elemento) {
-    int i;
-
-    elemento = fila.FILA[0];
-    for (i=0;i<fila.fim;i++) 
-        fila.FILA[i] = fila.FILA[i+1];
-    fila.fim--;
-}
 
 void ElementoInicio (TpFilaPrioridade fila, TpTarefa &elemento) {
-    elemento = fila.FILA[0];
+    elemento = fila.FILA[fila.inicio];
 }
 
 void ElementoFimPrioridade (TpFilaPrioridade fila, TpTarefa &elemento) {
     elemento = fila.FILA[fila.fim];
 }
 
-char FilaVazia (int fim) {
-    return fim == -1;
+char FilaVazia (int qtd) {
+    return qtd == 0;
 }
 
-char FilaCheia (int fim) {
-    return fim == MAXFILA-1;
+char FilaCheia (int qtd) {
+    return qtd == MAXFILA;
 }
 
-void InserirCircular (TpFilaPrioridade &fila, TpTarefa elemento ) {
+void Inserir (TpFilaPrioridade &fila, TpTarefa elemento ) {
     TpTarefa Aux;
     int i, fim, qtdAux;
 
@@ -99,7 +80,7 @@ void InserirCircular (TpFilaPrioridade &fila, TpTarefa elemento ) {
     }
 }
 
-TpTarefa RetirarCircular (TpFilaPrioridade &fila) {
+TpTarefa Retirar (TpFilaPrioridade &fila) {
     TpTarefa aux;
 
     aux = fila.FILA[fila.inicio];
@@ -108,5 +89,6 @@ TpTarefa RetirarCircular (TpFilaPrioridade &fila) {
         fila.inicio = 0;
     else
         fila.inicio++;
+    fila.qtde--;
     return aux;
 }
