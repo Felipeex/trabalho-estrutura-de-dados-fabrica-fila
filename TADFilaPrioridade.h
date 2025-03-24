@@ -15,11 +15,11 @@ struct TpFilaPrioridade  {
 
 void Inicializar (TpFilaPrioridade &fila);
 void Inserir (TpFilaPrioridade &fila, TpTarefa elemento);
-TpTarefa Retirar (TpFilaPrioridade &fila);
-void ElementoInicio (TpFilaPrioridade fila, TpTarefa &elemento);
-void ElementoFim (TpFilaPrioridade fila, TpTarefa &elemento);
-char FilaVazia (int qtd);
-char FilaCheia (int qtd);
+void Retirar (TpFilaPrioridade &fila);
+TpTarefa ElementoInicio (TpFilaPrioridade fila, TpTarefa &elemento);
+TpTarefa ElementoFim (TpFilaPrioridade fila, TpTarefa &elemento);
+char FilaVazia (int fim);
+char FilaCheia (int fim);
 
 void Inicializar (TpFilaPrioridade &fila) {
     fila.fim = -1;
@@ -27,24 +27,23 @@ void Inicializar (TpFilaPrioridade &fila) {
     fila.qtde = 0;
 }
 
-
-void ElementoInicio (TpFilaPrioridade fila, TpTarefa &elemento) {
+TpTarefa ElementoInicio (TpFilaPrioridade fila, TpTarefa &elemento) {
     elemento = fila.FILA[fila.inicio];
 }
 
-void ElementoFimPrioridade (TpFilaPrioridade fila, TpTarefa &elemento) {
+TpTarefa ElementoFimPrioridade (TpFilaPrioridade fila, TpTarefa &elemento) {
     elemento = fila.FILA[fila.fim];
 }
 
-char FilaVazia (int qtd) {
-    return qtd == 0;
+char FilaVazia (int fim) {
+    return fim == -1;
 }
 
-char FilaCheia (int qtd) {
-    return qtd == MAXFILA;
+char FilaCheia (int fim) {
+    return fim == MAXFILA-1;
 }
 
-void Inserir (TpFilaPrioridade &fila, TpTarefa elemento ) {
+void InserirCircular (TpFilaPrioridade &fila, TpTarefa elemento ) {
     TpTarefa Aux;
     int i, fim, qtdAux;
 
@@ -53,17 +52,16 @@ void Inserir (TpFilaPrioridade &fila, TpTarefa elemento ) {
     fim = fila.fim;
     if (fila.fim > fila.inicio) {
         i = fila.fim-1;
-        while (!FilaVazia(qtdAux) && elemento.prioridade < fila.FILA[i].prioridade) {
+        while (i>=fila.inicio && elemento.prioridade < fila.FILA[i].prioridade) {
             Aux = fila.FILA[i];
             fila.FILA[i] = elemento;
             fila.FILA[i+1] = Aux;
             i--;
-            qtdAux--;
         }
     } else {
         if(fila.fim > 0)
             i = fila.fim-1;
-        while (!FilaVazia(qtdAux) && elemento.prioridade < fila.FILA[i].prioridade) {
+        while (qtdAux > 0 && elemento.prioridade < fila.FILA[i].prioridade) {
             if (i >= 0) {
                 Aux = fila.FILA[i];
                 fila.FILA[i] = elemento;
@@ -81,7 +79,7 @@ void Inserir (TpFilaPrioridade &fila, TpTarefa elemento ) {
     }
 }
 
-TpTarefa Retirar (TpFilaPrioridade &fila) {
+TpTarefa RetirarCircular (TpFilaPrioridade &fila) {
     TpTarefa aux;
 
     aux = fila.FILA[fila.inicio];
@@ -90,6 +88,5 @@ TpTarefa Retirar (TpFilaPrioridade &fila) {
         fila.inicio = 0;
     else
         fila.inicio++;
-    fila.qtde--;
     return aux;
 }
