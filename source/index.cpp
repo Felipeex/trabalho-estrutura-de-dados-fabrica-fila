@@ -17,23 +17,18 @@ void ExibirFila (TpFilaPrioridade fila) {
 }
 
 void LeArquivo (TpFilaPrioridade &fila) {
-    FILE * Ptr = fopen("./assets/tarefas.txt", "r");
+    FILE * Ptr = fopen("./source/assets/tarefas.txt", "r");
     TpTarefa TarefaAux;
 
-    
-    printf ("ENTROU ARQUIVO");
-    getch();
-    fscanf(Ptr, "%[^,],%d,%[^,]\n", &TarefaAux.tipo, &TarefaAux.tempo, &TarefaAux.DescricaoTarefa);
-    while (!feof(Ptr)) {
-        Prioridade(TarefaAux);
-
-        printf ("ENTROU");
-        printf ("%s - %d - %s\n", TarefaAux.tipo, TarefaAux.tempo, TarefaAux.DescricaoTarefa);
-        getch();
-        if (!FilaCheia(fila.qtde)) {
-            Inserir(fila, TarefaAux);
-        }
+    if (Ptr != NULL) {
         fscanf(Ptr, "%[^,],%d,%[^,]\n", &TarefaAux.tipo, &TarefaAux.tempo, &TarefaAux.DescricaoTarefa);
+        while (!feof(Ptr)) {
+            Prioridade(TarefaAux);
+            if (!FilaCheia(fila.qtde)) {
+                Inserir(fila, TarefaAux);
+            }
+            fscanf(Ptr, "%[^,],%d,%[^,]\n", &TarefaAux.tipo, &TarefaAux.tempo, &TarefaAux.DescricaoTarefa);
+        }
     }
     fclose(Ptr);
 }
