@@ -8,3 +8,53 @@ Normal,10,Embalar jogo de tabuleiro
 Urgente,40,Problema de qualidade em ursinho de pelucia
 Normal,18,Montar quebra cabeça
 Opcional,30,manutenção preventiva nas maquinas de pintura
+Urgente,35,Interrupção na linha de produção
+Normal,25,Montar brinquedo educativo
+Opcional,50,Capacitação sobre segurança no trabalho
+Normal,15,Finalizar lote de carrinhos de madeira
+Urgente,20,Pane elétrica na máquina de costura
+Opcional,40,Teste de novos materiais recicláveis
+Normal,22,Montar bonecas articuladas
+Urgente,30,Avaria no motor da esteira transportadora
+Normal,12,Inspecionar qualidade das peças montadas
+Opcional,45,Implementar novo software de gestão
+Urgente,28,Falta de tinta para pintura dos brinquedos
+Normal,14,Cortar peças para montagem de castelo
+Opcional,35,Reduzir desperdício de matéria-prima
+Urgente,50,Quebra de peça na máquina de injeção
+Normal,20,Colocar adesivos em jogos de tabuleiro
+Opcional,55,Revisar processos de embalagem sustentável
+Urgente,38,Falta de parafusos para montagem
+Normal,18,Pintar peças de quebra-cabeça
+Opcional,48,Reorganizar estoque de insumos
+Urgente,27,Erro na calibragem da máquina de costura
+Normal,16,Embalagem final de bonecas de pano
+Opcional,42,Automatizar controle de produção
+Urgente,22,Falta de material plástico para moldagem
+Normal,19,Finalizar produção de trenzinhos de madeira
+Opcional,50,Implementar novo sistema de rastreamento
+Urgente,45,Falha mecânica na máquina de embalagem
+Normal,17,Montar kits educativos infantis
+Opcional,38,Treinar novos funcionários na linha de montagem
+Urgente,33,Problema na etiquetagem de produtos
+Normal,21,Inspecionar peças antes do envio
+Opcional,47,Atualizar documentação dos processos de produção
+Urgente,26,Falha no sistema pneumático da fábrica
+Normal,23,Finalizar personalização de brinquedos
+Opcional,52,Desenvolver novos modelos de embalagem
+Urgente,31,Desalinhamento na linha de montagem
+Normal,20,Testar novos materiais para brinquedos
+Opcional,40,Analisar eficiência das máquinas de corte
+Urgente,29,Avaria no sistema de resfriamento do plástico
+Normal,22,Aplicar revestimento em brinquedos de madeira
+Opcional,49,Testar métodos alternativos de pintura
+Urgente,36,Pane no painel elétrico principal
+Normal,15,Montar bonecos articulados
+Opcional,53,Simular novas estratégias logísticas
+Urgente,42,Interrupção no fornecimento de energia
+Normal,18,Realizar controle de qualidade nos brinquedos
+Opcional,46,Desenvolver novos padrões de segurança
+Urgente,39,Quebra de ferramenta na linha de montagem
+Normal,24,Finalizar embalagem de blocos de construção
+Opcional,44,Ajustar processos para reduzir tempo de fabricação
+Urgente,37,Defeito no sensor da máquina de corte

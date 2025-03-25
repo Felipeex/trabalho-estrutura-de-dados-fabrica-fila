@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <time.h>
 #include "./headers/TADFilaPrioridade.h"
+// #include "./headers/TADPainel.h"
 
 #ifdef WIN32
     #include "./headers/conio-dos.h"
@@ -39,11 +40,33 @@ void InserindoTarefa(TpFilaPrioridade &fila) {
 
 void Operadores(TpFilaPrioridade &fila) {
     TpTarefa VetorAux[MAXFILA], aux;
-    int operadores, tlVetAux=0, i, tempoOperacao, j, contTarefasConcluidas=0;
+    int operadores, tlVetAux=0, i, tempoOperacao, j, contTarefasConcluidas=0, contUrgente=0, contNormal=0,              contOpcional=0, qtdAux;;
+    float tempoUrgente=0, tempoNormal=0, tempoOpcional=0;
     printf("QUANTIDADE DE OPERADORES: ");
     scanf ("%d", &operadores);
     printf ("TEMPO DE OPERACAO: ");
     scanf("%d", &tempoOperacao);
+
+    qtdAux = fila.qtde;
+    while (qtdAux > 0) {
+        aux = fila.FILA[qtdAux];
+        switch (aux.prioridade) {
+            case 1:
+                tempoUrgente += aux.tempo;
+                contUrgente++;
+                break;
+            case 2:
+                tempoNormal += aux.tempo;
+                contNormal++;
+                break;
+            default:
+                tempoOpcional += aux.tempo;
+                contOpcional++;
+                break;
+        }
+        qtdAux--;
+    }
+    
 
     while(operadores > 0) {
         if (!FilaVazia(fila.qtde)) {
@@ -56,7 +79,8 @@ void Operadores(TpFilaPrioridade &fila) {
         printf("%s - %d - %s\n", VetorAux[i].tipo, VetorAux[i].tempo, VetorAux[i].DescricaoTarefa);
     getch();
 
-    while (tempoOperacao > 0) {
+    while (tempoOperacao >= 0) {
+        clrscr();
         for (i=0;i<tlVetAux;i++){
             if (VetorAux[i].tempo == 0) {
                 contTarefasConcluidas++;
@@ -70,12 +94,16 @@ void Operadores(TpFilaPrioridade &fila) {
         clrscr();
         for (i=0;i<tlVetAux;i++)
             printf("%s - %d - %s\n", VetorAux[i].tipo, VetorAux[i].tempo, VetorAux[i].DescricaoTarefa);
-        ExibirFila(fila);
+        // ExibirFila(fila);
         printf ("\nTEMPO: %d\n", tempoOperacao);
         sleep(1);
         tempoOperacao--;
     }
+    printf ("TEMPO MEDIO URGENTE: %.2f\n", tempoUrgente/contUrgente);
+    printf ("TEMPO MEDIO NORMAL: %.2f\n", tempoNormal/contNormal);
+    printf ("TEMPO MEDIO OPCIONAL: %.2f\n", tempoOpcional/contOpcional);
     printf ("TAREFAS CONCLUIDAS: %d\n", contTarefasConcluidas);
+    printf ("TAREFAS NAO CONCLUIDAS: %d\n", (fila.qtde+tlVetAux)-contTarefasConcluidas);
     getch();
     clrscr();
     for (i=0;i<tlVetAux;i++)
@@ -87,6 +115,8 @@ int main(){
     TpFilaPrioridade fila;
     clrscr();
 
+    // PainelPrincipal();
+    // getch();
     Inicializar(fila);
     InserindoTarefa(fila);
     Operadores(fila);
