@@ -16,7 +16,7 @@ struct TpFilaPrioridade  {
 
 void Inicializar(TpFilaPrioridade &fila);
 void Inserir(TpFilaPrioridade &fila, TpTarefa elemento);
-void Retirar(TpFilaPrioridade &fila);
+TpTarefa RetirarCircular(TpFilaPrioridade &fila);
 TpTarefa ElementoInicio(TpFilaPrioridade fila, TpTarefa &elemento);
 TpTarefa ElementoFim(TpFilaPrioridade fila, TpTarefa &elemento);
 char FilaVazia(int fim);

@@ -29,15 +29,33 @@ void InserindoTarefa(TpFilaPrioridade &fila) {
         fscanf(Ptr, "%[^,],%d,%[^\n]\n", TarefaAux.tipo, &TarefaAux.tempo, TarefaAux.DescricaoTarefa);
         TarefaAux.prioridade = gerarPrioridade(TarefaAux.tipo);
 
-        printf("%s - %d - %s\n", TarefaAux.tipo, TarefaAux.tempo, TarefaAux.DescricaoTarefa);
-        getch();
+        // printf("%s - %d - %s\n", TarefaAux.tipo, TarefaAux.tempo, TarefaAux.DescricaoTarefa);
+        // getch();
         
-/*         if (!FilaCheia(fila.qtde)) {
+        if (!FilaCheia(fila.qtde)) {
             Inserir(fila, TarefaAux);
-        } */
+        } 
     } while(!feof(Ptr));
 
     fclose(Ptr);
+}
+
+void Operadores(TpFilaPrioridade &fila) {
+    TpTarefa VetorAux[MAXFILA];
+    int operadores, tlVetAux=0, i;
+    printf("QUANTIDADE DE OPERADORES: ");
+    scanf ("%d", &operadores);
+
+    while(operadores > 0) {
+        if (!FilaVazia(fila.qtde)) {
+            VetorAux[tlVetAux] = RetirarCircular(fila);
+            tlVetAux++;
+            operadores--;
+        }
+    }
+    for (i=0;i<tlVetAux;i++)
+        printf("%s - %d - %s\n", VetorAux[i].tipo, VetorAux[i].tempo, VetorAux[i].DescricaoTarefa);
+    getch();
 }
 
 int main(){
@@ -46,7 +64,9 @@ int main(){
 
     Inicializar(fila);
     InserindoTarefa(fila);
-    // ExibirFila(fila);
+    Operadores(fila);
+    getch();
+    ExibirFila(fila);
     return 0;
 }
 
