@@ -3,7 +3,8 @@
 struct TpTarefa {
     char DescricaoTarefa[50];
     int tempo;
-    char prioridade[10];
+    char tipo[10];
+    int prioridade;
 };
 
 struct TpFilaPrioridade  {
@@ -43,13 +44,29 @@ char FilaCheia (int fim) {
     return fim == MAXFILA-1;
 }
 
+<<<<<<< Updated upstream:source/headers/TADFilaPrioridade.h
 void InserirCircular (TpFilaPrioridade &fila, TpTarefa elemento ) {
+=======
+void Prioridade (TpFilaPrioridade &fila) {
+    if (strcasecmp(fila.FILA[fila.fim].tipo, "Urgente") == 0)
+    fila.FILA[fila.fim].prioridade = 1;
+    else  
+        if (strcasecmp(fila.FILA[fila.fim].tipo, "Normal") == 0)
+            fila.FILA[fila.fim].prioridade = 2;
+        else
+            fila.FILA[fila.fim].prioridade = 3;
+}
+
+void Inserir (TpFilaPrioridade &fila, TpTarefa elemento ) {
+>>>>>>> Stashed changes:TADFilaPrioridade.h
     TpTarefa Aux;
     int i, fim, qtdAux;
 
     fila.FILA[++fila.fim] = elemento;
     qtdAux = ++fila.qtde;
     fim = fila.fim;
+
+    Prioridade(fila);
     if (fila.fim > fila.inicio) {
         i = fila.fim-1;
         while (i>=fila.inicio && elemento.prioridade < fila.FILA[i].prioridade) {
