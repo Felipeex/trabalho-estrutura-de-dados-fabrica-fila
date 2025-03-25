@@ -12,25 +12,36 @@ void ExibirFila (TpFilaPrioridade fila) {
     TpTarefa aux;
     while(!FilaVazia(fila.qtde)) {
         aux = RetirarCircular(fila);
-        printf ("%s - %d - %s\n", aux.tipo, aux.tempo, aux.DescricaoTarefa);
+        printf("%s - %d - %s\n", aux.tipo, aux.tempo, aux.DescricaoTarefa);
     }
 }
 
-void LeArquivo (TpFilaPrioridade &fila) {
+void InserindoTarefa(TpFilaPrioridade &fila) {
     FILE * Ptr = fopen("./source/assets/tarefas.txt", "r");
     TpTarefa TarefaAux;
 
-    if (Ptr != NULL) {
+    do {
         fscanf(Ptr, "%[^,],%d,%[^,]\n", &TarefaAux.tipo, &TarefaAux.tempo, &TarefaAux.DescricaoTarefa);
-        while (!feof(Ptr)) {
-            Prioridade(TarefaAux);
-            if (!FilaCheia(fila.qtde)) {
-                Inserir(fila, TarefaAux);
-            }
-            fscanf(Ptr, "%[^,],%d,%[^,]\n", &TarefaAux.tipo, &TarefaAux.tempo, &TarefaAux.DescricaoTarefa);
+        TarefaAux.prioridade = gerarPrioridade(tarefaAux.tipo)
+        
+        if (!FilaCheia(fila.qtde)) {
+            Inserir(fila, TarefaAux);
         }
-    }
+    } while(Ptr != NULL)
+
     fclose(Ptr);
+}
+
+int main(){
+    TpFilaPrioridade fila;
+    clrscr();
+
+    Inicializar(fila);
+    InserindoTarefa(fila);
+    ExibirFila(fila);
+
+    getch();
+    return 0;
 }
 
 // void Executar (void) {
@@ -84,23 +95,3 @@ void LeArquivo (TpFilaPrioridade &fila) {
 //     printf ("Fim da execucao\n");
 //     getch();
 // }
-
-void Executar (void) {
-    TpFilaPrioridade fila;
-    TpTarefa tarefa;
-    clrscr();
-
-    Inicializar(fila);
-
-    LeArquivo(fila);
-
-    ExibirFila(fila);
-    getch();
-}
-
-int main(){
-    // clrscr();
-    // PainelPrincipal();
-    Executar();
-    return 0;
-}
