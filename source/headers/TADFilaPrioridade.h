@@ -19,8 +19,8 @@ void Inserir(TpFilaPrioridade &fila, TpTarefa elemento);
 TpTarefa RetirarCircular(TpFilaPrioridade &fila);
 TpTarefa ElementoInicio(TpFilaPrioridade fila, TpTarefa &elemento);
 TpTarefa ElementoFim(TpFilaPrioridade fila, TpTarefa &elemento);
-char FilaVazia(int fim);
-char FilaCheia(int fim);
+char FilaVazia(int qtde);
+char FilaCheia(int qtde);
 
 void Inicializar(TpFilaPrioridade &fila) {
     fila.fim = -1;

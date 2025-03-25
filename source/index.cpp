@@ -28,9 +28,6 @@ void InserindoTarefa(TpFilaPrioridade &fila) {
     do {
         fscanf(Ptr, "%[^,],%d,%[^\n]\n", TarefaAux.tipo, &TarefaAux.tempo, TarefaAux.DescricaoTarefa);
         TarefaAux.prioridade = gerarPrioridade(TarefaAux.tipo);
-
-        // printf("%s - %d - %s\n", TarefaAux.tipo, TarefaAux.tempo, TarefaAux.DescricaoTarefa);
-        // getch();
         
         if (!FilaCheia(fila.qtde)) {
             Inserir(fila, TarefaAux);
@@ -41,10 +38,12 @@ void InserindoTarefa(TpFilaPrioridade &fila) {
 }
 
 void Operadores(TpFilaPrioridade &fila) {
-    TpTarefa VetorAux[MAXFILA];
-    int operadores, tlVetAux=0, i;
+    TpTarefa VetorAux[MAXFILA], aux;
+    int operadores, tlVetAux=0, i, tempoOperacao, j, contTarefasConcluidas=0;
     printf("QUANTIDADE DE OPERADORES: ");
     scanf ("%d", &operadores);
+    printf ("TEMPO DE OPERACAO: ");
+    scanf("%d", &tempoOperacao);
 
     while(operadores > 0) {
         if (!FilaVazia(fila.qtde)) {
@@ -53,6 +52,32 @@ void Operadores(TpFilaPrioridade &fila) {
             operadores--;
         }
     }
+    for (i=0;i<tlVetAux;i++)
+        printf("%s - %d - %s\n", VetorAux[i].tipo, VetorAux[i].tempo, VetorAux[i].DescricaoTarefa);
+    getch();
+
+    while (tempoOperacao > 0) {
+        for (i=0;i<tlVetAux;i++){
+            if (VetorAux[i].tempo == 0) {
+                contTarefasConcluidas++;
+                for (j=i;j<tlVetAux;j++) 
+                    VetorAux[j] = VetorAux[j+1];
+                if (!FilaVazia(fila.qtde))
+                    VetorAux[tlVetAux] = RetirarCircular(fila);
+            }
+            VetorAux[i].tempo--;
+        }
+        clrscr();
+        for (i=0;i<tlVetAux;i++)
+            printf("%s - %d - %s\n", VetorAux[i].tipo, VetorAux[i].tempo, VetorAux[i].DescricaoTarefa);
+        ExibirFila(fila);
+        printf ("\nTEMPO: %d\n", tempoOperacao);
+        sleep(1);
+        tempoOperacao--;
+    }
+    printf ("TAREFAS CONCLUIDAS: %d\n", contTarefasConcluidas);
+    getch();
+    clrscr();
     for (i=0;i<tlVetAux;i++)
         printf("%s - %d - %s\n", VetorAux[i].tipo, VetorAux[i].tempo, VetorAux[i].DescricaoTarefa);
     getch();
@@ -69,55 +94,3 @@ int main(){
     ExibirFila(fila);
     return 0;
 }
-
-// void Executar (void) {
-//     FILE * PtrTarefas = fopen("tarefas.txt", "r");
-//     TpTarefa tarefaAux;
-//     TpFilaPrioridade fila;
-//     int tempo;
-//     Inicializar(fila);
-//     if (PtrTarefas != NULL) {
-//         printf ("ENTROU");
-//         getch();
-//         fscanf(PtrTarefas, "%[^,],%d,%[^,]\n", tarefaAux.prioridade, &tarefaAux.tempo, tarefaAux.DescricaoTarefa);
-//         while (!feof(PtrTarefas)) {
-//             // printf ("ENTROU");
-//             // getch();
-//             printf ("%s - %d - %s\n", tarefaAux.prioridade, tarefaAux.tempo, tarefaAux.DescricaoTarefa);
-//             getch();
-
-//             if (!FilaCheia(fila.fim)){
-//                 // printf ("ENTROU");
-//                 // getch();
-//                 InserirCircular(fila, tarefaAux);
-//             }
-//             if(!FilaVazia(fila.fim)) {
-//                 RetirarCircular(fila);
-//                 ExibirFila(fila);
-//                 sleep(1);
-         
-//              fscanf(PtrTarefas, "%[^,],%d,%[^,]\n", tarefaAux.prioridade, &tarefaAux.tempo, tarefaAux.DescricaoTarefa);
-//             }
-
-//             tempo = fila.FILA[fila.inicio].tempo;
-
-
-//         }
-
-//         if (!FilaVazia(fila.fim) && tempo == 0) {
-//             printf ("ENTROU");
-//             getch();
-//             ExibirFila(fila);
-//             sleep(1);
-//         }
-//     }
-//     fclose(PtrTarefas);
-//     tempo = fila.FILA[fila.inicio].tempo;
-//     while(tempo > 0 ){
-//         printf ("Tempo restante: %d\n", tempo);
-//         sleep(1);
-//         tempo--;
-//     }
-//     printf ("Fim da execucao\n");
-//     getch();
-// }
