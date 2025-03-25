@@ -20,7 +20,7 @@ void Executar (void) {
     FILE * PtrTarefas = fopen("tarefas.txt", "r");
     TpTarefa tarefaAux;
     TpFilaPrioridade fila;
-
+    int tempo;
     Inicializar(fila);
     if (PtrTarefas != NULL) {
         printf ("ENTROU");
@@ -37,8 +37,14 @@ void Executar (void) {
                 // getch();
                 Inserir(fila, tarefaAux);
             }
+            if(!FilaVazia(fila.fim)) {
+                Retirar(fila, tarefaAux);
+                ExibirFila(fila);
+                sleep(1);
+         
             fscanf(PtrTarefas, "%[^,],%d,%[^,]\n", tarefaAux.prioridade, &tarefaAux.tempo, tarefaAux.DescricaoTarefa);
         }
+
         if (!FilaVazia(fila.fim)) {
             printf ("ENTROU");
             getch();
