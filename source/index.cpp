@@ -22,12 +22,12 @@ void InserindoTarefa(TpFilaPrioridade &fila) {
 
     do {
         fscanf(Ptr, "%[^,],%d,%[^,]\n", &TarefaAux.tipo, &TarefaAux.tempo, &TarefaAux.DescricaoTarefa);
-        TarefaAux.prioridade = gerarPrioridade(tarefaAux.tipo)
+        TarefaAux.prioridade = gerarPrioridade(TarefaAux.tipo);
         
         if (!FilaCheia(fila.qtde)) {
             Inserir(fila, TarefaAux);
         }
-    } while(Ptr != NULL)
+    } while(Ptr != NULL);
 
     fclose(Ptr);
 }

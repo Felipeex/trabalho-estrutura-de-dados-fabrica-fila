@@ -44,7 +44,7 @@ char FilaCheia(int qtde) {
     return qtde == MAXFILA;
 }
 
-void gerarPrioridade(char tipo[10]) {
+int gerarPrioridade(char tipo[10]) {
     if (!strcasecmp(tipo, "Urgente")) return 1;
     if (!strcasecmp(tipo, "Normal")) return 2;
     
