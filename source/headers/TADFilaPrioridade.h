@@ -36,29 +36,25 @@ TpTarefa ElementoFimPrioridade (TpFilaPrioridade fila, TpTarefa &elemento) {
     elemento = fila.FILA[fila.fim];
 }
 
-char FilaVazia (int fim) {
-    return fim == -1;
+char FilaVazia (int qtde) {
+    return qtde == 0;
 }
 
-char FilaCheia (int fim) {
-    return fim == MAXFILA-1;
+char FilaCheia (int qtde) {
+    return qtde == MAXFILA;
 }
 
-<<<<<<< Updated upstream:source/headers/TADFilaPrioridade.h
-void InserirCircular (TpFilaPrioridade &fila, TpTarefa elemento ) {
-=======
-void Prioridade (TpFilaPrioridade &fila) {
-    if (strcasecmp(fila.FILA[fila.fim].tipo, "Urgente") == 0)
-    fila.FILA[fila.fim].prioridade = 1;
+void Prioridade (TpTarefa &tarefa) {
+    if (strcasecmp(tarefa.tipo, "Urgente") == 0)
+        tarefa.prioridade = 1;
     else  
-        if (strcasecmp(fila.FILA[fila.fim].tipo, "Normal") == 0)
-            fila.FILA[fila.fim].prioridade = 2;
+        if (strcasecmp(tarefa.tipo, "Normal") == 0)
+            tarefa.prioridade = 2;
         else
-            fila.FILA[fila.fim].prioridade = 3;
+            tarefa.prioridade = 3;
 }
 
 void Inserir (TpFilaPrioridade &fila, TpTarefa elemento ) {
->>>>>>> Stashed changes:TADFilaPrioridade.h
     TpTarefa Aux;
     int i, fim, qtdAux;
 
@@ -66,7 +62,6 @@ void Inserir (TpFilaPrioridade &fila, TpTarefa elemento ) {
     qtdAux = ++fila.qtde;
     fim = fila.fim;
 
-    Prioridade(fila);
     if (fila.fim > fila.inicio) {
         i = fila.fim-1;
         while (i>=fila.inicio && elemento.prioridade < fila.FILA[i].prioridade) {
@@ -105,5 +100,6 @@ TpTarefa RetirarCircular (TpFilaPrioridade &fila) {
         fila.inicio = 0;
     else
         fila.inicio++;
+    fila.qtde--;
     return aux;
 }
