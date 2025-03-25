@@ -11,7 +11,7 @@
 void ExibirFila (TpFilaPrioridade fila) {
     TpTarefa aux;
     while(!FilaVazia(fila.fim)) {
-        Retirar(fila, aux);
+        aux = RetirarCircular(fila);
         printf ("%s - %d - %s\n", aux.prioridade, aux.tempo, aux.DescricaoTarefa);
     }
 }
@@ -35,14 +35,15 @@ void Executar (void) {
             if (!FilaCheia(fila.fim)){
                 // printf ("ENTROU");
                 // getch();
-                Inserir(fila, tarefaAux);
+                InserirCircular(fila, tarefaAux);
             }
             if(!FilaVazia(fila.fim)) {
-                Retirar(fila, tarefaAux);
+                RetirarCircular(fila);
                 ExibirFila(fila);
                 sleep(1);
          
-            fscanf(PtrTarefas, "%[^,],%d,%[^,]\n", tarefaAux.prioridade, &tarefaAux.tempo, tarefaAux.DescricaoTarefa);
+             fscanf(PtrTarefas, "%[^,],%d,%[^,]\n", tarefaAux.prioridade, &tarefaAux.tempo, tarefaAux.DescricaoTarefa);
+            }
         }
 
         if (!FilaVazia(fila.fim)) {
@@ -53,21 +54,12 @@ void Executar (void) {
         }
     }
     fclose(PtrTarefas);
-
+ 
 }
 
-void teste (void) {
-    TpFilaPrioridade fila;
-    TpTarefa aux;
-    
-
-}
-
-
-
-int main (void) {
-    // clrscr();
-    // PainelPrincipal();
+int main(){
+    clrscr();
+    PainelPrincipal();
     Executar();
     return 0;
 }
