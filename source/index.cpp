@@ -82,7 +82,7 @@ void Operadores(TpFilaPrioridade &fila) {
     while (tempoOperacao >= 0) {
         clrscr();
         for (i=0;i<tlVetAux;i++){
-            if (VetorAux[i].tempo == 0) {
+            if (VetorAux[i].tempo < 0) {
                 contTarefasConcluidas++;
                 for (j=i;j<tlVetAux;j++) 
                     VetorAux[j] = VetorAux[j+1];
