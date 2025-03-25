@@ -32,10 +32,10 @@ void InserindoTarefa(TpFilaPrioridade &fila) {
         printf("%s - %d - %s\n", TarefaAux.tipo, TarefaAux.tempo, TarefaAux.DescricaoTarefa);
         getch();
         
-        if (!FilaCheia(fila.qtde)) {
+/*         if (!FilaCheia(fila.qtde)) {
             Inserir(fila, TarefaAux);
-        }
-    } while(Ptr != NULL);
+        } */
+    } while(!feof(Ptr));
 
     fclose(Ptr);
 }
