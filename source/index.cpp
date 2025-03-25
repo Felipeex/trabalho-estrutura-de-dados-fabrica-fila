@@ -3,10 +3,15 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
-#include "./headers/conio.h"
-#include "./headers/cores.h"
 #include "./headers/TADFilaPrioridade.h"
-#include "./headers/TADPainel.h"
+
+#ifdef WIN32
+    #include "./headers/conio-dos.h"
+    #include "./headers/meu-conio.h"
+#else
+    #include "./headers/conio-unix.h"
+    #include "./headers/cores.h"
+#endif
 
 void ExibirFila (TpFilaPrioridade fila) {
     TpTarefa aux;
@@ -23,6 +28,8 @@ void InserindoTarefa(TpFilaPrioridade &fila) {
     do {
         fscanf(Ptr, "%[^,],%d,%[^,]\n", &TarefaAux.tipo, &TarefaAux.tempo, &TarefaAux.DescricaoTarefa);
         TarefaAux.prioridade = gerarPrioridade(TarefaAux.tipo);
+
+        getch();
         
         if (!FilaCheia(fila.qtde)) {
             Inserir(fila, TarefaAux);
@@ -38,9 +45,7 @@ int main(){
 
     Inicializar(fila);
     InserindoTarefa(fila);
-    ExibirFila(fila);
-
-    getch();
+    // ExibirFila(fila);
     return 0;
 }
 
