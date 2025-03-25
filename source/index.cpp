@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+// #include "./headers/conio-unix.h"
 #include "./headers/TADFilaPrioridade.h"
 // #include "./headers/TADPainel.h"
 
@@ -40,33 +41,20 @@ void InserindoTarefa(TpFilaPrioridade &fila) {
 
 void Operadores(TpFilaPrioridade &fila) {
     TpTarefa VetorAux[MAXFILA], aux;
-    int operadores, tlVetAux=0, i, tempoOperacao, j, contTarefasConcluidas=0, contUrgente=0, contNormal=0,              contOpcional=0, qtdAux;;
+    int operadores, tlVetAux=0, i, tempoOperacao, j, contTarefasConcluidas=0, contUrgente=0, contNormal=0,              contOpcional=0;
     float tempoUrgente=0, tempoNormal=0, tempoOpcional=0;
-    printf("QUANTIDADE DE OPERADORES: ");
-    scanf ("%d", &operadores);
+    do {
+        printf ("MINIMO: 1 | MAXIMO 20\n");
+        printf("QUANTIDADE DE OPERADORES: ");
+        scanf ("%d", &operadores);
+        if (operadores < 1 || operadores >= 20) {
+            printf(RED "\nLIMITE DE OPERADORES NAO RESPEITADO\n" );
+            printf ("DIGITE NOVAMENTE\n\n" NORMAL);
+        }
+        
+    } while (operadores < 1 || operadores >= 20);
     printf ("TEMPO DE OPERACAO: ");
     scanf("%d", &tempoOperacao);
-
-    qtdAux = fila.qtde;
-    while (qtdAux > 0) {
-        aux = fila.FILA[qtdAux];
-        switch (aux.prioridade) {
-            case 1:
-                tempoUrgente += aux.tempo;
-                contUrgente++;
-                break;
-            case 2:
-                tempoNormal += aux.tempo;
-                contNormal++;
-                break;
-            default:
-                tempoOpcional += aux.tempo;
-                contOpcional++;
-                break;
-        }
-        qtdAux--;
-    }
-    
 
     while(operadores > 0) {
         if (!FilaVazia(fila.qtde)) {
@@ -79,29 +67,63 @@ void Operadores(TpFilaPrioridade &fila) {
         printf("%s - %d - %s\n", VetorAux[i].tipo, VetorAux[i].tempo, VetorAux[i].DescricaoTarefa);
     getch();
 
-    while (tempoOperacao >= 0) {
-        clrscr();
+    while (tempoOperacao >= 0 && !kbhit()) {
+
         for (i=0;i<tlVetAux;i++){
-            if (VetorAux[i].tempo < 0) {
-                contTarefasConcluidas++;
+
+            switch(VetorAux[i].prioridade) {
+                case 1:
+                    tempoUrgente++;
+                    break;
+                case 2:
+                    tempoNormal++;
+                    break;
+                default:
+                    tempoOpcional++;
+                    break;
+            }
+
+            if (VetorAux[i].tempo == 0) {
+
                 for (j=i;j<tlVetAux;j++) 
                     VetorAux[j] = VetorAux[j+1];
-                if (!FilaVazia(fila.qtde))
+                if (!FilaVazia(fila.qtde)) {
                     VetorAux[tlVetAux] = RetirarCircular(fila);
+                }
+                switch(VetorAux[i].prioridade) {
+                    case 1:
+                        contUrgente++;
+                        break;
+                    case 2:
+                        contNormal++;
+                        break;
+                    default:
+                        contOpcional++;
+                        break;
+                }
+                contTarefasConcluidas++;
             }
             VetorAux[i].tempo--;
         }
         clrscr();
+        ExibirFila(fila);
+        printf ("\n\n");
         for (i=0;i<tlVetAux;i++)
             printf("%s - %d - %s\n", VetorAux[i].tipo, VetorAux[i].tempo, VetorAux[i].DescricaoTarefa);
-        // ExibirFila(fila);
         printf ("\nTEMPO: %d\n", tempoOperacao);
         sleep(1);
         tempoOperacao--;
     }
-    printf ("TEMPO MEDIO URGENTE: %.2f\n", tempoUrgente/contUrgente);
-    printf ("TEMPO MEDIO NORMAL: %.2f\n", tempoNormal/contNormal);
-    printf ("TEMPO MEDIO OPCIONAL: %.2f\n", tempoOpcional/contOpcional);
+
+    if (contUrgente > 0) 
+        tempoUrgente = tempoUrgente/contUrgente;
+    if (contNormal > 0) 
+        tempoNormal = tempoNormal/contNormal;
+    if (contOpcional > 0) 
+        tempoOpcional = tempoOpcional/contOpcional;
+    printf ("TEMPO MEDIO URGENTE: %.2f\n", tempoUrgente);
+    printf ("TEMPO MEDIO NORMAL: %.2f\n", tempoNormal);
+    printf ("TEMPO MEDIO OPCIONAL: %.2f\n", tempoOpcional);
     printf ("TAREFAS CONCLUIDAS: %d\n", contTarefasConcluidas);
     printf ("TAREFAS NAO CONCLUIDAS: %d\n", (fila.qtde+tlVetAux)-contTarefasConcluidas);
     getch();
