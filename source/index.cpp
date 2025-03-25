@@ -26,7 +26,7 @@ void InserindoTarefa(TpFilaPrioridade &fila) {
     TpTarefa TarefaAux;
 
     do {
-        fscanf(Ptr, "%[^,],%d,%[^,]\n", &TarefaAux.tipo, &TarefaAux.tempo, &TarefaAux.DescricaoTarefa);
+        fscanf(Ptr, "%[^,],%d,%[^\n]\n", TarefaAux.tipo, &TarefaAux.tempo, TarefaAux.DescricaoTarefa);
         TarefaAux.prioridade = gerarPrioridade(TarefaAux.tipo);
 
         printf("%s - %d - %s\n", TarefaAux.tipo, TarefaAux.tempo, TarefaAux.DescricaoTarefa);
