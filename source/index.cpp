@@ -3,10 +3,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
-#include "conio.h"
-#include "cores.h"
-#include "TADFilaPrioridade.h"
-#include "TADPainel.h"
+#include "./headers/conio.h"
+#include "./headers/cores.h"
+#include "./headers/TADFilaPrioridade.h"
+#include "./headers/TADPainel.h"
 
 void ExibirFila (TpFilaPrioridade fila) {
     TpTarefa aux;
