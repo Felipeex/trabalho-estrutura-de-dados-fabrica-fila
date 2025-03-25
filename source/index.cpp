@@ -44,9 +44,13 @@ void Executar (void) {
          
              fscanf(PtrTarefas, "%[^,],%d,%[^,]\n", tarefaAux.prioridade, &tarefaAux.tempo, tarefaAux.DescricaoTarefa);
             }
+
+            tempo = fila.FILA[fila.inicio].tempo;
+
+
         }
 
-        if (!FilaVazia(fila.fim)) {
+        if (!FilaVazia(fila.fim) && tempo == 0) {
             printf ("ENTROU");
             getch();
             ExibirFila(fila);
@@ -54,8 +58,16 @@ void Executar (void) {
         }
     }
     fclose(PtrTarefas);
- 
+    tempo = fila.FILA[fila.inicio].tempo;
+    while(tempo > 0 ){
+        printf ("Tempo restante: %d\n", tempo);
+        sleep(1);
+        tempo--;
+    }
+    printf ("Fim da execucao\n");
+    getch();
 }
+
 
 int main(){
     clrscr();
