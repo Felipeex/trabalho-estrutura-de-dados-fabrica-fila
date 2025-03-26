@@ -102,7 +102,8 @@ void Operadores(TpFilaPrioridade &fila) {
                     for (j=i;j<tlVetAux-1;j++) 
                         VetorAux[j] = VetorAux[j+1];
                     VetorAux[j] = RetirarCircular(fila);
-                // } else 
+                } 
+                // else 
                 //     tlVetAux--;
                 switch(VetorAux[i].prioridade) {
                     case 1:
