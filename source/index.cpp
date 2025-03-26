@@ -98,11 +98,12 @@ void Operadores(TpFilaPrioridade &fila) {
 
             if (VetorAux[i].tempo <= 0) {
 
-                for (j=i;j<tlVetAux-1;j++) 
-                    VetorAux[j] = VetorAux[j+1];
                 if (!FilaVazia(fila.qtde)) {
+                    for (j=i;j<tlVetAux-1;j++) 
+                        VetorAux[j] = VetorAux[j+1];
                     VetorAux[j] = RetirarCircular(fila);
-                }
+                // } else 
+                //     tlVetAux--;
                 switch(VetorAux[i].prioridade) {
                     case 1:
                         contUrgente++;
