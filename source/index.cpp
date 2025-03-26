@@ -12,12 +12,13 @@
     #include "./headers/meu-conio.h"
 #else
     #include "./headers/conio-unix.h"
-    #include "./headers/cores.h"
 #endif
+
+#include "./headers/cores.h"
 
 void ExibirFila (TpFilaPrioridade fila) {
     TpTarefa aux;
-    while(!FilaVazia(fila.qtde)) {
+    while(!FilaVazia(fila.quantidade)) {
         aux = RetirarCircular(fila);
         printf("%s | %d | %s\n", aux.tipo, aux.tempo, aux.DescricaoTarefa);
     }
@@ -32,12 +33,11 @@ void InserindoTarefa(TpFilaPrioridade &fila, FILE * Ptr) {
         fscanf(Ptr, "%[^,],%d,%[^\n]\n", TarefaAux.tipo, &TarefaAux.tempo, TarefaAux.DescricaoTarefa);
         TarefaAux.prioridade = gerarPrioridade(TarefaAux.tipo);
         
-        if (!FilaCheia(fila.qtde)) {
+        if (!FilaCheia(fila.quantidade)) {
             Inserir(fila, TarefaAux);
             cont++;
         } 
-    } while(cont<30);
-
+    } while(cont < 30);
 }
 
 void InsereDepois(TpFilaPrioridade &fila, FILE * Ptr) {
@@ -45,7 +45,7 @@ void InsereDepois(TpFilaPrioridade &fila, FILE * Ptr) {
     fscanf(Ptr, "%[^,],%d,%[^\n]\n", TarefaAux.tipo, &TarefaAux.tempo, TarefaAux.DescricaoTarefa);
     TarefaAux.prioridade = gerarPrioridade(TarefaAux.tipo);
     
-    if (!FilaCheia(fila.qtde)) {
+    if (!FilaCheia(fila.quantidade)) {
         Inserir(fila, TarefaAux);
     } 
 }
@@ -70,7 +70,7 @@ void Operadores(TpFilaPrioridade &fila) {
 
     InserindoTarefa(fila, Ptr);
     while(operadores > 0) {
-        if (!FilaVazia(fila.qtde)) {
+        if (!FilaVazia(fila.quantidade)) {
             VetorAux[tlVetAux] = RetirarCircular(fila);
             tlVetAux++;
             operadores--;
@@ -98,7 +98,7 @@ void Operadores(TpFilaPrioridade &fila) {
 
             if (VetorAux[i].tempo <= 0) {
 
-                if (!FilaVazia(fila.qtde)) {
+                if (!FilaVazia(fila.quantidade)) {
                     for (j=i;j<tlVetAux-1;j++) 
                         VetorAux[j] = VetorAux[j+1];
                     VetorAux[j] = RetirarCircular(fila);
@@ -144,7 +144,7 @@ void Operadores(TpFilaPrioridade &fila) {
     printf ("TEMPO MEDIO NORMAL: %.2f\n", tempoNormal);
     printf ("TEMPO MEDIO OPCIONAL: %.2f\n", tempoOpcional);
     printf ("TAREFAS CONCLUIDAS: %d\n", contTarefasConcluidas);
-    printf ("TAREFAS NAO CONCLUIDAS: %d\n", (fila.qtde+tlVetAux)-contTarefasConcluidas);
+    printf ("TAREFAS NAO CONCLUIDAS: %d\n", (fila.quantidade+tlVetAux)-contTarefasConcluidas);
     getch();
     clrscr();
     for (i=0;i<tlVetAux;i++)

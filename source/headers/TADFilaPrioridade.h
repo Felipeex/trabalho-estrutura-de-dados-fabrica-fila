@@ -9,7 +9,7 @@ struct TpTarefa {
 
 struct TpFilaPrioridade  {
     int inicio;
-    int qtde;
+    int quantidade;
     int fim;
     TpTarefa FILA[MAXFILA];
 };
@@ -19,13 +19,13 @@ void Inserir(TpFilaPrioridade &fila, TpTarefa elemento);
 TpTarefa RetirarCircular(TpFilaPrioridade &fila);
 TpTarefa ElementoInicio(TpFilaPrioridade fila, TpTarefa &elemento);
 TpTarefa ElementoFim(TpFilaPrioridade fila, TpTarefa &elemento);
-char FilaVazia(int qtde);
-char FilaCheia(int qtde);
+char FilaVazia(int quantidade);
+char FilaCheia(int quantidade);
 
 void Inicializar(TpFilaPrioridade &fila) {
     fila.fim = -1;
     fila.inicio = 0;
-    fila.qtde = 0;
+    fila.quantidade = 0;
 }
 
 TpTarefa ElementoInicio(TpFilaPrioridade fila, TpTarefa &elemento) {
@@ -36,12 +36,12 @@ TpTarefa ElementoFimPrioridade(TpFilaPrioridade fila, TpTarefa &elemento) {
     elemento = fila.FILA[fila.fim];
 }
 
-char FilaVazia(int qtde) {
-    return qtde == 0;
+char FilaVazia(int quantidade) {
+    return quantidade == 0;
 }
 
-char FilaCheia(int qtde) {
-    return qtde == MAXFILA;
+char FilaCheia(int quantidade) {
+    return quantidade == MAXFILA;
 }
 
 int gerarPrioridade(char tipo[10]) {
@@ -51,39 +51,33 @@ int gerarPrioridade(char tipo[10]) {
     return 3;
 }
 
+void compararEOrdernarTarefas(TpFilaPrioridade &fila, TpTarefa primeiraTarefa, TpTarefa segundaTarefa, int &fim) {
+    if (segundaTarefa.prioridade > primeiraTarefa.prioridade) {
+        fila.FILA[fim] = segundaTarefa;
+        fila.FILA[fim - 1] = primeiraTarefa;
+    }
+    
+    fim--;
+}
+
 void Inserir(TpFilaPrioridade &fila, TpTarefa elemento ) {
-    TpTarefa Aux;
-    int i, fim, qtdAux;
+    TpTarefa auxTarefa;
 
     fila.FILA[++fila.fim] = elemento;
-    qtdAux = ++fila.qtde;
-    fim = fila.fim;
+    fila.quantidade++;
 
-    if(fila.fim > fila.inicio) {
-        i = fila.fim-1;
-        while(i>=fila.inicio && elemento.prioridade < fila.FILA[i].prioridade) {
-            Aux = fila.FILA[i];
-            fila.FILA[i] = elemento;
-            fila.FILA[i+1] = Aux;
-            i--;
-        }
-    } else {
-        if(fila.fim > 0)
-            i = fila.fim-1;
-        while(qtdAux > 0 && elemento.prioridade < fila.FILA[i].prioridade) {
-            if(i >= 0) {
-                Aux = fila.FILA[i];
-                fila.FILA[i] = elemento;
-                fila.FILA[i+1] = Aux;
-            }
-            else {
-                i = MAXFILA-1;
-                Aux = fila.FILA[i];
-                fila.FILA[i] = elemento;
-                fila.FILA[0] = Aux;
-            }
-            i--;
-            qtdAux--;
+    int fim = fila.fim;
+    for(int i = 1; i < fila.quantidade; i++) {
+        if ((fim - 1) < 0) { // Vefica se não está comparando o fim com lixo, e precisa dar a volta no vetor
+            TpTarefa primeiraTarefa = fila.FILA[fim];
+            TpTarefa segundaTarefa = fila.FILA[MAXFILA - 1];
+            compararEOrdernarTarefas(fila, primeiraTarefa, segundaTarefa, fim);
+
+            fim = MAXFILA - 1;
+        } else { // Significa que o fim está linear ao inicio, e não precisamos dar a volta no vetor
+            TpTarefa primeiraTarefa = fila.FILA[fim];
+            TpTarefa segundaTarefa = fila.FILA[fim - 1];
+            compararEOrdernarTarefas(fila, primeiraTarefa, segundaTarefa, fim);
         }
     }
 }
@@ -97,6 +91,6 @@ TpTarefa RetirarCircular(TpFilaPrioridade &fila) {
         fila.inicio = 0;
     else
         fila.inicio++;
-    fila.qtde--;
+    fila.quantidade--;
     return aux;
 }
