@@ -153,7 +153,7 @@ void Operadores(TpFilaPrioridade &fila) {
     getch();
     fclose(Ptr);
 }
-}
+
 
 int main(){
     TpFilaPrioridade fila;
