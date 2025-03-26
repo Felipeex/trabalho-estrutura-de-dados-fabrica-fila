@@ -51,14 +51,6 @@ int gerarPrioridade(char tipo[10]) {
     return 3;
 }
 
-void compararEOrdernarTarefas(TpFilaPrioridade &fila, TpTarefa primeiraTarefa, TpTarefa segundaTarefa, int &fim) {
-    if (segundaTarefa.prioridade > primeiraTarefa.prioridade) {
-        fila.FILA[fim] = segundaTarefa;
-        fila.FILA[fim - 1] = primeiraTarefa;
-    }
-    
-    fim--;
-}
 
 void Inserir(TpFilaPrioridade &fila, TpTarefa elemento ) {
     TpTarefa Aux;
