@@ -53,7 +53,7 @@ void InsereDepois(TpFilaPrioridade &fila, FILE * Ptr) {
 void Operadores(TpFilaPrioridade &fila) {
     FILE * Ptr = fopen("./source/assets/tarefas.txt", "r");
     TpTarefa VetorAux[MAXFILA], aux;
-    int operadores, tlVetAux=0, i, tempoOperacao, j, contTarefasConcluidas=0, contUrgente=0, contNormal=0,              contOpcional=0, contInsere=0;
+    int operadores, tlVetAux=0, i, tempoOperacao, j, contTarefasConcluidas=0, contUrgente=0, contNormal=0,              contOpcional=0, contInsere=0, contTarefasIncompletas=0;
     float tempoUrgente=0, tempoNormal=0, tempoOpcional=0;
     do {
         printf ("MINIMO: 1 | MAXIMO 20\n");
@@ -98,9 +98,9 @@ void Operadores(TpFilaPrioridade &fila) {
 
             if (VetorAux[i].tempo <= 0) {
 
+                for (j=i;j<tlVetAux-1;j++) 
+                    VetorAux[j] = VetorAux[j+1];
                 if (!FilaVazia(fila.quantidade)) {
-                    for (j=i;j<tlVetAux-1;j++) 
-                        VetorAux[j] = VetorAux[j+1];
                     VetorAux[j] = RetirarCircular(fila);
                 } 
                 // else 
@@ -120,7 +120,7 @@ void Operadores(TpFilaPrioridade &fila) {
             }
             VetorAux[i].tempo--;
         }
-        if(contInsere == 10) {
+        if(contInsere == 5) {
             InsereDepois(fila, Ptr);
             contInsere = 0;
         }
@@ -135,6 +135,14 @@ void Operadores(TpFilaPrioridade &fila) {
         contInsere++;
     }
 
+    for (i=0;i<tlVetAux;i++) {
+        if (VetorAux[i].tempo > 0)
+            contTarefasIncompletas++;
+    }
+    while(!FilaVazia(fila.quantidade)) {
+        RetirarCircular(fila);
+        contTarefasIncompletas++;
+    }
     if (contUrgente > 0) 
         tempoUrgente = tempoUrgente/contUrgente;
     if (contNormal > 0) 
@@ -145,7 +153,7 @@ void Operadores(TpFilaPrioridade &fila) {
     printf ("TEMPO MEDIO NORMAL: %.2f\n", tempoNormal);
     printf ("TEMPO MEDIO OPCIONAL: %.2f\n", tempoOpcional);
     printf ("TAREFAS CONCLUIDAS: %d\n", contTarefasConcluidas);
-    printf ("TAREFAS NAO CONCLUIDAS: %d\n", (fila.quantidade+tlVetAux)-contTarefasConcluidas);
+    printf ("TAREFAS NAO CONCLUIDAS: %d\n", contTarefasIncompletas);
     getch();
     clrscr();
     for (i=0;i<tlVetAux;i++)
