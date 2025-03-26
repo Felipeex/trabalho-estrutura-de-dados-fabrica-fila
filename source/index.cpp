@@ -19,7 +19,7 @@ void ExibirFila (TpFilaPrioridade fila) {
     TpTarefa aux;
     while(!FilaVazia(fila.qtde)) {
         aux = RetirarCircular(fila);
-        printf("%s - %d - %s\n", aux.tipo, aux.tempo, aux.DescricaoTarefa);
+        printf("%s | %d | %s\n", aux.tipo, aux.tempo, aux.DescricaoTarefa);
     }
 }
 
@@ -59,12 +59,12 @@ void Operadores(TpFilaPrioridade &fila) {
         printf ("MINIMO: 1 | MAXIMO 20\n");
         printf("QUANTIDADE DE OPERADORES: ");
         scanf ("%d", &operadores);
-        if (operadores < 1 || operadores >= 20) {
+        if (operadores < 1 || operadores > 20) {
             printf(RED "\nLIMITE DE OPERADORES NAO RESPEITADO\n" );
             printf ("DIGITE NOVAMENTE\n\n" NORMAL);
         }
         
-    } while (operadores < 1 || operadores >= 20);
+    } while (operadores < 1 || operadores > 20);
     printf ("TEMPO DE OPERACAO: ");
     scanf("%d", &tempoOperacao);
 
@@ -96,7 +96,7 @@ void Operadores(TpFilaPrioridade &fila) {
                     break;
             }
 
-            if (VetorAux[i].tempo == 0) {
+            if (VetorAux[i].tempo <= 0) {
 
                 for (j=i;j<tlVetAux-1;j++) 
                     VetorAux[j] = VetorAux[j+1];
@@ -126,7 +126,7 @@ void Operadores(TpFilaPrioridade &fila) {
         ExibirFila(fila);
         printf ("\n\n");
         for (i=0;i<tlVetAux;i++)
-            printf("%s - %d - %s\n", VetorAux[i].tipo, VetorAux[i].tempo, VetorAux[i].DescricaoTarefa);
+            printf("%s | %d | %s\n", VetorAux[i].tipo, VetorAux[i].tempo, VetorAux[i].DescricaoTarefa);
         printf ("\nTEMPO: %d\n", tempoOperacao);
         sleep(1);
         tempoOperacao--;
