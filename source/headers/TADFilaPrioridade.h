@@ -61,23 +61,38 @@ void compararEOrdernarTarefas(TpFilaPrioridade &fila, TpTarefa primeiraTarefa, T
 }
 
 void Inserir(TpFilaPrioridade &fila, TpTarefa elemento ) {
-    TpTarefa auxTarefa;
+    TpTarefa Aux;
+    int i, fim, qtdAux;
 
     fila.FILA[++fila.fim] = elemento;
-    fila.quantidade++;
+    qtdAux = ++fila.quantidade;
+    fim = fila.fim;
 
-    int fim = fila.fim;
-    for(int i = 1; i < fila.quantidade; i++) {
-        if ((fim - 1) < 0) { // Vefica se não está comparando o fim com lixo, e precisa dar a volta no vetor
-            TpTarefa primeiraTarefa = fila.FILA[fim];
-            TpTarefa segundaTarefa = fila.FILA[MAXFILA - 1];
-            compararEOrdernarTarefas(fila, primeiraTarefa, segundaTarefa, fim);
-
-            fim = MAXFILA - 1;
-        } else { // Significa que o fim está linear ao inicio, e não precisamos dar a volta no vetor
-            TpTarefa primeiraTarefa = fila.FILA[fim];
-            TpTarefa segundaTarefa = fila.FILA[fim - 1];
-            compararEOrdernarTarefas(fila, primeiraTarefa, segundaTarefa, fim);
+    if(fila.fim > fila.inicio) {
+        i = fila.fim-1;
+        while(i>=fila.inicio && elemento.prioridade < fila.FILA[i].prioridade) {
+            Aux = fila.FILA[i];
+            fila.FILA[i] = elemento;
+            fila.FILA[i+1] = Aux;
+            i--;
+        }
+    } else {
+        if(fila.fim > 0)
+            i = fila.fim-1;
+        while(qtdAux > 0 && elemento.prioridade < fila.FILA[i].prioridade) {
+            if(i >= 0) {
+                Aux = fila.FILA[i];
+                fila.FILA[i] = elemento;
+                fila.FILA[i+1] = Aux;
+            }
+            else {
+                i = MAXFILA-1;
+                Aux = fila.FILA[i];
+                fila.FILA[i] = elemento;
+                fila.FILA[0] = Aux;
+            }
+            i--;
+            qtdAux--;
         }
     }
 }
