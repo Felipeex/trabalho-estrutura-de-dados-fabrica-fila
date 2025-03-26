@@ -23,9 +23,10 @@ void ExibirFila (TpFilaPrioridade fila) {
     }
 }
 
-void InserindoTarefa(TpFilaPrioridade &fila) {
-    FILE * Ptr = fopen("./source/assets/tarefas.txt", "r");
+void InserindoTarefa(TpFilaPrioridade &fila, FILE * Ptr) {
     TpTarefa TarefaAux;
+    int cont=0;
+
 
     do {
         fscanf(Ptr, "%[^,],%d,%[^\n]\n", TarefaAux.tipo, &TarefaAux.tempo, TarefaAux.DescricaoTarefa);
@@ -33,15 +34,26 @@ void InserindoTarefa(TpFilaPrioridade &fila) {
         
         if (!FilaCheia(fila.qtde)) {
             Inserir(fila, TarefaAux);
+            cont++;
         } 
-    } while(!feof(Ptr));
+    } while(cont<30);
 
-    fclose(Ptr);
+}
+
+void InsereDepois(TpFilaPrioridade &fila, FILE * Ptr) {
+    TpTarefa TarefaAux;
+    fscanf(Ptr, "%[^,],%d,%[^\n]\n", TarefaAux.tipo, &TarefaAux.tempo, TarefaAux.DescricaoTarefa);
+    TarefaAux.prioridade = gerarPrioridade(TarefaAux.tipo);
+    
+    if (!FilaCheia(fila.qtde)) {
+        Inserir(fila, TarefaAux);
+    } 
 }
 
 void Operadores(TpFilaPrioridade &fila) {
+    FILE * Ptr = fopen("./source/assets/tarefas.txt", "r");
     TpTarefa VetorAux[MAXFILA], aux;
-    int operadores, tlVetAux=0, i, tempoOperacao, j, contTarefasConcluidas=0, contUrgente=0, contNormal=0,              contOpcional=0;
+    int operadores, tlVetAux=0, i, tempoOperacao, j, contTarefasConcluidas=0, contUrgente=0, contNormal=0,              contOpcional=0, contInsere=0;
     float tempoUrgente=0, tempoNormal=0, tempoOpcional=0;
     do {
         printf ("MINIMO: 1 | MAXIMO 20\n");
@@ -56,6 +68,7 @@ void Operadores(TpFilaPrioridade &fila) {
     printf ("TEMPO DE OPERACAO: ");
     scanf("%d", &tempoOperacao);
 
+    InserindoTarefa(fila, Ptr);
     while(operadores > 0) {
         if (!FilaVazia(fila.qtde)) {
             VetorAux[tlVetAux] = RetirarCircular(fila);
@@ -85,10 +98,10 @@ void Operadores(TpFilaPrioridade &fila) {
 
             if (VetorAux[i].tempo == 0) {
 
-                for (j=i;j<tlVetAux;j++) 
+                for (j=i;j<tlVetAux-1;j++) 
                     VetorAux[j] = VetorAux[j+1];
                 if (!FilaVazia(fila.qtde)) {
-                    VetorAux[tlVetAux] = RetirarCircular(fila);
+                    VetorAux[j] = RetirarCircular(fila);
                 }
                 switch(VetorAux[i].prioridade) {
                     case 1:
@@ -105,6 +118,10 @@ void Operadores(TpFilaPrioridade &fila) {
             }
             VetorAux[i].tempo--;
         }
+        if(contInsere == 10) {
+            InsereDepois(fila, Ptr);
+            contInsere = 0;
+        }
         clrscr();
         ExibirFila(fila);
         printf ("\n\n");
@@ -113,6 +130,7 @@ void Operadores(TpFilaPrioridade &fila) {
         printf ("\nTEMPO: %d\n", tempoOperacao);
         sleep(1);
         tempoOperacao--;
+        contInsere++;
     }
 
     if (contUrgente > 0) 
@@ -131,6 +149,7 @@ void Operadores(TpFilaPrioridade &fila) {
     for (i=0;i<tlVetAux;i++)
         printf("%s - %d - %s\n", VetorAux[i].tipo, VetorAux[i].tempo, VetorAux[i].DescricaoTarefa);
     getch();
+    fclose(Ptr);
 }
 
 int main(){
@@ -140,7 +159,7 @@ int main(){
     // PainelPrincipal();
     // getch();
     Inicializar(fila);
-    InserindoTarefa(fila);
+    // InserindoTarefa(fila);
     Operadores(fila);
     getch();
     ExibirFila(fila);
