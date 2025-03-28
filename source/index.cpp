@@ -21,6 +21,7 @@ void tituloFabrica (void);
 void tituloOperadores (void);
 void tituloFila(void);
 void tituloNome(void);
+void tituloError (void);
 
 void ExibirFila (TpFilaPrioridade fila) {
     TpTarefa aux;
@@ -69,6 +70,8 @@ void Operadores(TpFilaPrioridade &fila, char nome[3][50]) {
         printf("Quantidade de operadores (Minimo: 1 | Maximo: 20): ");
         scanf ("%d", &operadores);
         if (operadores < 1 || operadores > 20) {
+            clrscr();
+            tituloError();
             printf(RED "\nLimite dos operadores nao respeitado\n" );
             printf ("Digite novamente!!\n\n" NORMAL);
         }
@@ -250,6 +253,17 @@ void tituloNome(void) {
     printf("$$ |\\$$$ |$$ |  $$ |$$ | $$ | $$ |$$   ____| \n");
     printf("$$ | \\$$ |\\$$$$$$  |$$ | $$ | $$ |\\$$$$$$$\\ \n");
     printf("\\__|  \\__| \\______/ \\__| \\__| \\__| \\_______| \n" NORMAL);
+}
+
+void tituloError (void) {
+    gotox(60); printf(RED "$$$$$$$$\\ $$$$$$$\\  $$$$$$$\\   $$$$$$\\  $$$$$$$\\  \n");
+    gotox(60); printf("$$  _____|$$  __$$\\ $$  __$$\\ $$  __$$\\ $$  __$$\\ \n");
+    gotox(60); printf("$$ |      $$ |  $$ |$$ |  $$ |$$ /  $$ |$$ |  $$ |\n");
+    gotox(60); printf("$$$$$\\    $$$$$$$  |$$$$$$$  |$$ |  $$ |$$$$$$$  |\n");
+    gotox(60); printf("$$  __|   $$  __$$< $$  __$$< $$ |  $$ |$$  __$$< \n");
+    gotox(60); printf("$$ |      $$ |  $$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |\n");
+    gotox(60); printf("$$$$$$$$\\ $$ |  $$ |$$ |  $$ | $$$$$$  |$$ |  $$ |\n");
+    gotox(60); printf("\\________|\\__|  \__|\\__|  \__| \______/ \__|  \__|\n\n\n" NORMAL);
 }
 int main(){
     TpFilaPrioridade fila;

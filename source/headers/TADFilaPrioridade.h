@@ -71,6 +71,8 @@ void Inserir(TpFilaPrioridade &fila, TpTarefa elemento ) {
     } else {
         if(fila.fim > 0)
             i = fila.fim-1;
+        else 
+            i = MAXFILA-1;
         while(qtdAux > 0 && elemento.prioridade < fila.FILA[i].prioridade) {
             if(i >= 0) {
                 Aux = fila.FILA[i];
